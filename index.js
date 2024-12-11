@@ -29,7 +29,7 @@ const client = new MongoClient(uri, {
 let collection;
 client.connect().then(() => {
   console.log("Connected to MongoDB!");
-  collection = client.db("echoglimmer").collection("Job-PortalCollection"); 
+  collection = client.db("echoglimmer").collection("Job-Collection"); 
   // Replace with your actual DB name // Replace with your collection name
 });
 
@@ -39,6 +39,64 @@ async function run() {
       "Pinged your deployment. You successfully connected to MongoDB!"
     );
     // Creates the Api endpoints from below.
+
+    // Get all jobs
+    app.get("/jobs", async (req, res) => {
+      const jobs = await collection.find({}).toArray();
+      res.send(jobs);
+    });
+
+    // // Get a single job
+    // app.get("/jobs/:id", async (req, res) => {
+    //   const job = await collection.findOne({ _id: new ObjectId(req.params.id) });
+    //   res.send(job);
+    // });
+
+    // // Create a new job
+    // app.post("/jobs", async (req, res) => {
+    //   const job = req.body;
+    //   const result = await collection.insertOne(job);
+    //   res.send(result);
+    // });
+
+    // // Update a job
+    // app.put("/jobs/:id", async (req, res) => {
+    //   const job = req.body;
+    //   const result = await collection.updateOne({ _id: new ObjectId(req.params.id) }, { $set: job });
+    //   res.send(result);
+    // });
+
+    // // Delete a job
+    // app.delete("/jobs/:id", async (req, res) => {
+    //   const result = await collection.deleteOne({ _id: new ObjectId(req.params.id) });
+    //   res.send(result);
+    // });
+
+    // // Delete all jobs
+    // app.delete("/jobs", async (req, res) => {
+    //   const result = await collection.deleteMany({});
+    //   res.send(result);
+    // });
+
+    // // Search jobs by title
+    // app.get("/jobs/search", async (req, res) => {
+    //   const jobs = await collection.find({ title: req.query.title }).toArray();
+    //   res.send(jobs);
+    // });
+
+    // // Search jobs by location
+    // app.get("/jobs/search", async (req, res) => {
+    //   const jobs = await collection.find({ location: req.query.location }).toArray();
+    //   res.send(jobs);
+    // });
+
+    // // Search jobs by company
+    // app.get("/jobs/search", async (req, res) => {
+    //   const jobs = await collection.find({ company: req.query.company }).toArray();
+    //   res.send(jobs);
+    // });
+
+
   } catch (error) {
     console.error("Error connecting to MongoDB:", error);
   }
